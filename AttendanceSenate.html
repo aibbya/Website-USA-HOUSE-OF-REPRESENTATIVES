@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>Attendance Senate</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+    integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+</head>
+
+<body class="container">
+  <header>
+    <div class="row">
+      <div class="col-10">
+        <img src="img/build.jpg" style="height: 60px" alt=logo>
+      </div>
+      <div class="col-2 d-flex align-content-center flex-wrap">
+        <img src="img/letter.png" alt=letter> <a href="mailto:info@tgif.net"> info@tgif.net </a>
+      </div>
+
+    </div>
+    <nav class="navbar navbar-expand-sm bg-light">
+      <ul class="navbar-nav ">
+        <li class="nav- item"><a href="index.html" class="nav-link active">Home</a></li>
+        <li class="nav- item dropdown"><a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Congress
+            113th</a>
+          <ul class="dropdown-menu">
+            <li><a href="senate.html" class="dropdown-item nav-link ">Senate</a></li>
+            <li><a href="house.html" class="dropdown-item nav-link">House</a></li>
+          </ul>
+        </li>
+        <li class="nav- item dropdown"><a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Attendance </a>
+          <ul class="dropdown-menu">
+            <li><a href="AttendanceSenate.html" class="dropdown-item nav-link ">Senate</a></li>
+            <li><a href="AttendanceHouse.html" class="dropdown-item nav-link">House</a></li>
+          </ul>
+        </li>
+        <li class="nav- item dropdown"><a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Party Loyalty</a>
+          <ul class="dropdown-menu">
+            <li><a href="loyaltySenate.html" class="dropdown-item nav-link ">Senate</a></li>
+            <li><a href="loyaltyHouse.html" class="dropdown-item nav-link">House</a></li>
+          </ul>
+        </li>
+      </ul>
+    </nav>
+
+  </header>
+  <section  id="estadisticaGralSENATE" class="row mt-5">
+  <div class="col-6 text-justify ">
+    <h2>Attendance</h2>
+    <p class="text-justify"> The Constitution specifies that a majority of members constitutes a quorum to do business in each house. Representatives and senators rarely force the presence of a quorum by demanding quorum calls; thus, in most cases, debates continue even if a majority is not present.<br>
+      The Senate uses roll-call votes; a clerk calls out the names of all the senators, each senator stating "aye" or "no" when his or her name is announced. The House reserves roll-call votes for the most formal matters, as a roll-call of all 435 representatives takes quite some time; normally, members vote by electronic device. In the case of a tie, the motion in question fails. In the Senate, the Vice President may (if present) cast the tiebreaking vote.</p>
+  </div>
+   
+  <!--Table container-->
+  <table id="table1" class="table col-4"></table>
+  <table id="table2" class="table col-6"></table>
+  <table id="table3" class="table col-6"></table>
+
+</section>
+  <!-- <script> var intentoMil = document.getElementById("senate_data"); intentoMil.innerHTML = JSON.stringify(dataJSON);  </script> -->
+  <script src="dataHouse.js"> </script>
+  <script src="dataSenate.js"> </script>
+  <script src="myJS.js"> </script>
+  <script src="T3Json.js"></script>
+
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+    integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous">
+    </script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+    integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous">
+    </script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+    integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous">
+    </script>
+  <footer class="card-header text-center bg-dark text-light "> &copy; 2016 TGIF | All Rights Reserved
+  </footer>
+</body>
+
+</html>
