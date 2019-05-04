@@ -1,11 +1,17 @@
 console.log("probando");
 /* VARIABLES GENERALES */
+var stadistic = {
+  "numberOfDemocrats": 0,
+}
+
+
 var membersHouse = dataHouse.results[0].members;
 var membersSenate = dataSenate.results[0].members;
-var democrats = selectData().filter(item => item.party == "D");
+// var democrats = 
 var republicans = selectData().filter(item => item.party == "R");
 var independents = selectData().filter(item => item.party == "I");
-var democratsVotes = sumaVotes(democrats).toFixed(2);
+/* var democrats = ; */
+// var democratsVotes = sumaVotes(democrats).toFixed(2);
 var republicansVotes = sumaVotes(republicans).toFixed(2);
 var independentsVotes = sumaVotes(independents).toFixed(2);
 var diezPorcent = Math.round(selectData().length * 0.10);
@@ -22,12 +28,13 @@ var dataSort = selectData().sort(function (a, b) {
 var menoresMisses = menores10(dataSort);
 var mayoresMisses = mayores10(dataSort);
 
+stadistic.numberOfDemocrats = [selectData().filter(item => item.party == "D")].length;
 
 // democrats.map(element => {element.votes_with_party_pct});
 
 /* COMANDOS PARA PRUEBA */
 
-console.log(selectData());
+/* console.log(selectData());
 console.log(democrats);
 console.log(democrats.length);
 // console.table(table1)
@@ -41,10 +48,10 @@ console.log(independents);
 console.log(menores10(dataSort));
 
 
+array.reduce((count, ))
 
 
-
-
+ */
 /* 
 °°°°°°°°°°°°°°°°°°°°°°°°°°°
 °  ARRAYS DE ESTADISTICAS °
@@ -98,9 +105,18 @@ function menores10(data) {
 
 function mayores10(data) {
   var mayores = [];
-  for (let x = data.length - 1; x >= data.length - diezPorcent; x--)
+  aux = [];
+  for (var x = data.length - 1; x >= data.length - diezPorcent; x--)
     mayores.push(data[x]);
+
+  if (mayores[mayores.length - 1].missed_votes === data[x + 1].missed_votes) {
+    mayores.push(data[x + 1]);
+
+    
+
+  }
   return mayores;
+  console.log("Mayores:" + JSON.stringify(mayores));
 };
 console.log(mayores10(dataSort));
 
@@ -131,13 +147,13 @@ var arrayObjects = [
 // tabla1 datos generales
 var mytable1 = "<thead > <tr><th> Party </th><th> N° of Reps </th> <th> % Voted w/ Party </th> </thead>";
 mytable1 += "<tbody>";
-mytable1 += "<tr> <td> Democrats </td> <td>" + democrats.length + "</td> <td>" + democratsVotes + "</td> </tr>";
+mytable1 += "<tr> <td> Democrats </td> <td>" + stadistic.numberOfDemocrats + "</td> <td>"  /*+democratsVotes+*/ + "</td> </tr>";
 mytable1 += "<tr> <td> Republicans </td> <td>" + republicans.length + "</td> <td>" + republicansVotes + " </td> </tr>";
 if (independents != 0) {
   mytable1 += "<tr> <td> Independents </td> <td>" + independents.length + "</td> <td>" + independentsVotes + "</td> </tr>"
 };
 console.log(mytable1);
-mytable1 += "<tr> <td> TOTAL </td> <td>" + parseInt(democrats.length + republicans.length + independents.length) + "</td> <td>" + parseFloat(democratsVotes + republicansVotes + independentsVotes).toFixed(2) + "</td> </tr></tbody>"
+mytable1 += "<tr> <td> TOTAL </td> <td>" + parseInt(stadistic.numberOfDemocrats + republicans.length + independents.length) + "</td> <td>" + parseFloat(/* democratsVotes + */ republicansVotes + independentsVotes).toFixed(2) + "</td> </tr></tbody>"
 
 // tabla1 print
 document.getElementById('table1').innerHTML = mytable1;
