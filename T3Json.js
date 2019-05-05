@@ -1,9 +1,5 @@
 console.log("probando");
 /* VARIABLES GENERALES */
-var stadistic = {
-  "numberOfDemocrats": 0,
-}
-
 
 var membersHouse = dataHouse.results[0].members;
 var membersSenate = dataSenate.results[0].members;
@@ -11,15 +7,18 @@ var membersSenate = dataSenate.results[0].members;
 var republicans = selectData().filter(item => item.party == "R");
 var independents = selectData().filter(item => item.party == "I");
 /* var democrats = ; */
-// var democratsVotes = sumaVotes(democrats).toFixed(2);
-var republicansVotes = sumaVotes(republicans).toFixed(2);
-var independentsVotes = sumaVotes(independents).toFixed(2);
+var democratsVotes = parseFloat(sumaVotes(selectData().filter(item => item.party == "D")));
+console.log(typeof(democratsVotes));
+
+
+var republicansVotes = parseFloat(sumaVotes(republicans));
+var independentsVotes = parseFloat(sumaVotes(independents));
 var diezPorcent = Math.round(selectData().length * 0.10);
 var dataSort = selectData().sort(function (a, b) {
-  if (a.missed_votes > b.missed_votes) {
+  if (a.missed_votes_pct > b.missed_votes_pct) {
     return 1;
   }
-  if (a.missed_votes < b.missed_votes) {
+  if (a.missed_votes_pct < b.missed_votes_pct) {
     return -1;
   }
   // a must be equal to b
@@ -28,8 +27,24 @@ var dataSort = selectData().sort(function (a, b) {
 var menoresMisses = menores10(dataSort);
 var mayoresMisses = mayores10(dataSort);
 
-stadistic.numberOfDemocrats = [selectData().filter(item => item.party == "D")].length;
+// DATA JSON..... ----------------------
+var stadistic = {
+  "numberOfDemocrats": 0,
+  "numberOfIndependents": 0,
+  "numberOfRepublicans": 0,
+  "mostLoyal" : 0,
+  "leastLoyal": 0,
+  "mostAttendance" : 0,
+  "leastAttendance": 0,
+};
 
+stadistic.numberOfDemocrats = selectData().filter(item => item.party == "D").length;
+stadistic.numberOfRepublicans = selectData().filter(item => item.party == "R").length;
+stadistic.numberOfIndependents = selectData().filter(item => item.party == "I").length;
+stadistic.mostAttendance = mayores10(dataSort);
+stadistic.leastAttendance = menores10(dataSort);
+console.log(stadistic.mostAttendance);
+ 
 // democrats.map(element => {element.votes_with_party_pct});
 
 /* COMANDOS PARA PRUEBA */
@@ -49,12 +64,10 @@ console.log(menores10(dataSort));
 
 
 array.reduce((count, ))
-
-
  */
 /* 
 °°°°°°°°°°°°°°°°°°°°°°°°°°°
-°  ARRAYS DE ESTADISTICAS °
+°  FUNCIONES °
 °°°°°°°°°°°°°°°°°°°°°°°°°°°      */
 
 // selecciona la data a usar
@@ -66,61 +79,62 @@ function selectData() {
     return membersHouse;
   }
 }
-
+// Miembros por partido
+function members (array, value){array.filter(item => item.party == value).length
+  
+}
+console.log(members(selectData(),"D"))
 //   % Voted w/ Party
 
 function sumaVotes(array) {
   let suma = (0);
-
   for (let i = 0; i < array.length; i++) {
     suma = suma + array[i].votes_with_party_pct;
   }
-  return suma / array.length;
-
-  /* no anda
-   data.forEach(element => { 
-       suma += element.votes_with_party_pct;
-       */
+  return suma / selectData().length;   
 };
 
-// Ordenar Sort
-
-
-
-
-
+// Ordenar Sort esta dentro de la variable dataSort
 
 // top 10 menores
 
 function menores10(data) {
   var menores = [];
-  for (let x = 0; x < diezPorcent; x++)
+  for (var x = 0; x < diezPorcent; x++)
     menores.push(data[x]);
+  
+    while (menores[menores.length - 1].missed_votes_pct === data[x].missed_votes_pct) {
+      menores.push(data[x]);
+      x++
+    } 
   return menores;
 };
-
 
 
 // top 10 mayores
 
 function mayores10(data) {
   var mayores = [];
-  aux = [];
-  for (var x = data.length - 1; x >= data.length - diezPorcent; x--)
+  for (var x = data.length -1; x >= data.length - diezPorcent; x--){
+    mayores.push(data[x]);}
+    console.log(data[x]);
+    console.log(data[x+1]);
+    console.log(mayores[mayores.length-1]);
+      
+  while (mayores[mayores.length - 1].missed_votes_pct === data[x].missed_votes_pct) {
     mayores.push(data[x]);
-
-  if (mayores[mayores.length - 1].missed_votes === data[x + 1].missed_votes) {
-    mayores.push(data[x + 1]);
-
+    x++
+    // console.log(data[x]);
     
-
-  }
+  }  
+  // if (mayores[mayores.length - 1].missed_votes_pct === data[x + 2].missed_votes_pct) {
+    // mayores.push(data[x + 2]);
+   
+  //  console.log(data[x + 2]);
+   
   return mayores;
-  console.log("Mayores:" + JSON.stringify(mayores));
+  
 };
-console.log(mayores10(dataSort));
-
-
 
 
 //  loyalty
@@ -137,7 +151,7 @@ var arrayObjects = [
 
 // var democratsVotes= Array.from(democrats).map(element => element.votes_with_party_pct);
 
-
+// ¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡FIN ZONA DE PRUEBAS!!!!!!!!!
 
 /* 
 °°°°°°°°°°°°°°°°°°°°°°°°°°°
@@ -147,21 +161,21 @@ var arrayObjects = [
 // tabla1 datos generales
 var mytable1 = "<thead > <tr><th> Party </th><th> N° of Reps </th> <th> % Voted w/ Party </th> </thead>";
 mytable1 += "<tbody>";
-mytable1 += "<tr> <td> Democrats </td> <td>" + stadistic.numberOfDemocrats + "</td> <td>"  /*+democratsVotes+*/ + "</td> </tr>";
-mytable1 += "<tr> <td> Republicans </td> <td>" + republicans.length + "</td> <td>" + republicansVotes + " </td> </tr>";
+mytable1 += "<tr> <td> Democrats </td> <td>" + stadistic.numberOfDemocrats + "</td> <td>" +democratsVotes.toFixed(2) + " % </td> </tr>";
+mytable1 += "<tr> <td> Republicans </td> <td>" + republicans.length + "</td> <td>" + republicansVotes.toFixed(2) + " % </td> </tr>";
 if (independents != 0) {
-  mytable1 += "<tr> <td> Independents </td> <td>" + independents.length + "</td> <td>" + independentsVotes + "</td> </tr>"
+  mytable1 += "<tr> <td> Independents </td> <td>" + independents.length + "</td> <td>" + independentsVotes.toFixed(2) + " % </td> </tr>"
 };
-console.log(mytable1);
-mytable1 += "<tr> <td> TOTAL </td> <td>" + parseInt(stadistic.numberOfDemocrats + republicans.length + independents.length) + "</td> <td>" + parseFloat(/* democratsVotes + */ republicansVotes + independentsVotes).toFixed(2) + "</td> </tr></tbody>"
+// console.log(mytable1);
+mytable1 += "<tr> <td> TOTAL </td> <td>" + parseInt(stadistic.numberOfDemocrats + republicans.length + independents.length) + "</td> <td>" + parseFloat(democratsVotes + republicansVotes + independentsVotes).toFixed(2) + " % </td> </tr></tbody>"
 
 // tabla1 print
 document.getElementById('table1').innerHTML = mytable1;
 
 
-// table2
-function table2(array) {
-  var mytable2 = "<thead > <tr><th> Name </th><th> N° of Misses Votes </th> <th> % Misses Votes </th> </thead><tbody>";
+// tables TOPS
+function tableTOPS(array) {
+  var mytable2 = "<thead > <tr><th> Name </th><th> Missed Votes</th> <th> % Missed Votes </th> </thead><tbody>";
   array.forEach(element => {
     mytable2 += "<tr>";
     if (element.middle_name === null) {
@@ -172,17 +186,27 @@ function table2(array) {
     mytable2 += "<td>" + element.missed_votes + "</td>";
 
     mytable2 += "<td>" + element.missed_votes_pct + "% </td> </tr>";
+    
+    // mytable2 += "<td>" + element.total_votes + "</td>";
 
+    // mytable2 += "<td>" + element.votes_with_party_pct + "% </td> </tr>";
   });
   mytable2 += "</tbody>";
   return mytable2;
 }
 
+// ATTENDANCE table2 LEAST comprometidos print
+document.getElementById('table2').innerHTML = tableTOPS(mayoresMisses);
 
-
-// table2 print
-document.getElementById('table2').innerHTML = table2(mayoresMisses);
+// ATTENDANCE table3 MOST comprometidos print
+document.getElementById('table3').innerHTML = tableTOPS(menoresMisses);
 
 /* ME QUEDA PENDIENTE:
-1- verificar cuales son los menores y cuales son los mayores, si estoy mostrando la data que corresponde
-2- arreglar la funcion del top para que tome el valor del diezPorcent */
+1- hacer las paginas de loyalty
+2- crear la data JSON de estadisticas 
+3- hacer las tablas de loyalty, quiero que la funcion tablaTOPS me arme tambien las tablas loyalty
+4- debo agregar los titulos de las tablas
+5- verificar si anda los datos colocados en stadistic
+NOTA: el html de loyal se esta armando con la dala de house porque es diferente el id principal*/
+
+
