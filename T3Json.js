@@ -9,8 +9,6 @@ var independents = selectData().filter(item => item.party == "I");
 /* var democrats = ; */
 var democratsVotes = parseFloat(sumaVotes(selectData().filter(item => item.party == "D")));
 console.log(typeof(democratsVotes));
-
-
 var republicansVotes = parseFloat(sumaVotes(republicans));
 var independentsVotes = parseFloat(sumaVotes(independents));
 var diezPorcent = Math.round(selectData().length * 0.10);
@@ -28,19 +26,9 @@ var menoresMisses = menores10(dataSort);
 var mayoresMisses = mayores10(dataSort);
 
 // DATA JSON..... ----------------------
-var stadistic = {
-  "numberOfDemocrats": 0,
-  "numberOfIndependents": 0,
-  "numberOfRepublicans": 0,
-  "mostLoyal" : 0,
-  "leastLoyal": 0,
-  "mostAttendance" : 0,
-  "leastAttendance": 0,
-};
 
-stadistic.numberOfDemocrats = selectData().filter(item => item.party == "D").length;
-stadistic.numberOfRepublicans = selectData().filter(item => item.party == "R").length;
-stadistic.numberOfIndependents = selectData().filter(item => item.party == "I").length;
+
+
 stadistic.mostAttendance = mayores10(dataSort);
 stadistic.leastAttendance = menores10(dataSort);
 console.log(stadistic.mostAttendance);

@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-  <title>Attendance House</title>
+  <title>Loyalty House</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
@@ -31,15 +31,13 @@
             <li><a href="house.html" class="dropdown-item nav-link">House</a></li>
           </ul>
         </li>
-        <li class="nav- item dropdown"><a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Attendance
-          </a>
+        <li class="nav- item dropdown"><a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Attendance </a>
           <ul class="dropdown-menu">
             <li><a href="AttendanceSenate.html" class="dropdown-item nav-link ">Senate</a></li>
             <li><a href="AttendanceHouse.html" class="dropdown-item nav-link">House</a></li>
           </ul>
         </li>
-        <li class="nav- item dropdown"><a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Party
-            Loyalty</a>
+        <li class="nav- item dropdown"><a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Party Loyalty</a>
           <ul class="dropdown-menu">
             <li><a href="loyaltySenate.html" class="dropdown-item nav-link ">Senate</a></li>
             <li><a href="loyaltyHouse.html" class="dropdown-item nav-link">House</a></li>
@@ -49,49 +47,23 @@
     </nav>
 
   </header>
-  <section id="estadisticaGralHOUSE" class="row mt-5">
-    <div class="col-6 text-justify ">
-      <h2>Attendance- HOUSE</h2>
-      <p class="text-justify"> The Constitution specifies that a majority of members constitutes a quorum to do business
-        in each house. Representatives and senators rarely force the presence of a quorum by demanding quorum calls;
-        thus, in most cases, debates continue even if a majority is not present.<br>
-        The Senate uses roll-call votes; a clerk calls out the names of all the senators, each senator stating "aye" or
-        "no" when his or her name is announced. The House reserves roll-call votes for the most formal matters, as a
-        roll-call of all 435 representatives takes quite some time; normally, members vote by electronic device. In the
-        case of a tie, the motion in question fails. In the Senate, the Vice President may (if present) cast the
-        tiebreaking vote.</p>
-    </div>
+  <section  id="estadisticaGralSENATE" class="row mt-5">
+  <div class="col-6 text-justify ">
+    <h2>Party Loyalty</h2>
+    <p class="text-justify"> Those who consider themselves to be strong partisans, strong Democrats and strong Republicans respectively, tend to be the most faithful in voting for their party's nominee for office and legislation that backs their party's agenda.</p>
+  </div>
+   
+  <!--Table container-->
+  <table id="table1" class="table col-4"></table>
+  <table id="table2" class="table col-6"></table>
+  <table id="table3" class="table col-6"></table>
 
-    <!--Table container-->
-    <div class="col-4">
-      <h2>Senate at a glance</h2>
-      <table id="table1" class="table"></table>
-    </div>
-    <div class="col-6">
-      <h2>Least Engaged (Bottom 10% Attendance)</h2>
-      <table id="table2" class="table"></table>
-    </div>
-    <div class="col-6">
-      <h2>Most Engaged (Top 10% Attendance)</h2>
-      <table id="table3" class="table"></table>
-    </div>
-  </section>
+</section>
   <!-- <script> var intentoMil = document.getElementById("senate_data"); intentoMil.innerHTML = JSON.stringify(dataJSON);  </script> -->
   <script src="dataHouse.js"> </script>
   <script src="dataSenate.js"> </script>
   <script src="myJS.js"> </script>
-  <script>
-    var stadistic = {
-      "numberOfDemocrats": 0,
-      "numberOfIndependents": 0,
-      "numberOfRepublicans": 0,
-      "democratsVotes": 0,
-      "republicansVotes": 0,
-      "independentsVotes": 0,
-      "bottomAttendance": [],
-      "mostAttendance": [],
-    };
-  </script>
+  <script src="T3Json.js"></script>
 
   <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
     integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous">
