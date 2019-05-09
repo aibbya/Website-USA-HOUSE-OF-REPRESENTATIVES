@@ -80,22 +80,8 @@
   <script src="dataHouse.js"> </script>
   <script src="dataSenate.js"> </script>
   <script src="myJS.js"> </script>
-  <script>
-    var stadistic = {
-      "numberOfDemocrats": 0,
-      "numberOfIndependents": 0,
-      "numberOfRepublicans": 0,
-      "democratsVotes": 0,
-      "republicansVotes": 0,
-      "independentsVotes": 0,
-      "bottomAttendance": [],
-      "mostAttendance": [],
-    };
-    stadistic.numberOfDemocrats = dataSenate.results[0].members.filter(item => item.party == "D").length;
-    console.log(stadistic.numberOfDemocrats);
+  <script src="T3Json.js">  </script>
     
-    // stadistic.numberOfRepublicans = selectData().filter(item => item.party == "R").length;
-    // stadistic.numberOfIndependents = selectData().filter(item => item.party == "I").length;
   </script>
 
   <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"

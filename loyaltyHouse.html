@@ -31,13 +31,15 @@
             <li><a href="house.html" class="dropdown-item nav-link">House</a></li>
           </ul>
         </li>
-        <li class="nav- item dropdown"><a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Attendance </a>
+        <li class="nav- item dropdown"><a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Attendance
+          </a>
           <ul class="dropdown-menu">
             <li><a href="AttendanceSenate.html" class="dropdown-item nav-link ">Senate</a></li>
             <li><a href="AttendanceHouse.html" class="dropdown-item nav-link">House</a></li>
           </ul>
         </li>
-        <li class="nav- item dropdown"><a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Party Loyalty</a>
+        <li class="nav- item dropdown"><a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Party
+            Loyalty</a>
           <ul class="dropdown-menu">
             <li><a href="loyaltySenate.html" class="dropdown-item nav-link ">Senate</a></li>
             <li><a href="loyaltyHouse.html" class="dropdown-item nav-link">House</a></li>
@@ -47,18 +49,29 @@
     </nav>
 
   </header>
-  <section  id="estadisticaGralSENATE" class="row mt-5">
-  <div class="col-6 text-justify ">
-    <h2>Party Loyalty</h2>
-    <p class="text-justify"> Those who consider themselves to be strong partisans, strong Democrats and strong Republicans respectively, tend to be the most faithful in voting for their party's nominee for office and legislation that backs their party's agenda.</p>
-  </div>
-   
-  <!--Table container-->
-  <table id="table1" class="table col-4"></table>
-  <table id="table2" class="table col-6"></table>
-  <table id="table3" class="table col-6"></table>
+  <section id="" class="row mt-5">
+    <div class="col-6 text-justify ">
+      <h2>Party Loyalty</h2>
+      <p class="text-justify"> Those who consider themselves to be strong partisans, strong Democrats and strong
+        Republicans respectively, tend to be the most faithful in voting for their party's nominee for office and
+        legislation that backs their party's agenda.</p>
+    </div>
 
-</section>
+    <!--Table container-->
+    <div class="col-4">
+      <h2>Senate at a glance</h2>
+      <table id="table1" class="table "></table>
+    </div>
+    <div class="col-6">
+      <h2>Least Loyal (Bottom 10% of Party)</h2>
+      <table id="table4" class="table "></table>
+    </div>
+    <div class="col-6">
+      <h2> Loyal (Top 10% of Party)</h2>
+      <table id="table5" class="table "></table>
+    </div>
+
+  </section>
   <!-- <script> var intentoMil = document.getElementById("senate_data"); intentoMil.innerHTML = JSON.stringify(dataJSON);  </script> -->
   <script src="dataHouse.js"> </script>
   <script src="dataSenate.js"> </script>
@@ -67,13 +80,13 @@
 
   <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
     integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous">
-    </script>
+  </script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
     integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous">
-    </script>
+  </script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
     integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous">
-    </script>
+  </script>
   <footer class="card-header text-center bg-dark text-light "> &copy; 2016 TGIF | All Rights Reserved
   </footer>
 </body>
