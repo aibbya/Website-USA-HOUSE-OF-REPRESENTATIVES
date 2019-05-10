@@ -9,7 +9,6 @@ var democrats = selectData().filter(item => item.party == "D")
 var democratsVotes = parseFloat(sumaVotes(selectData().filter(item => item.party == "D")));
 var republicansVotes = parseFloat(sumaVotes(republicans));
 var independentsVotes = parseFloat(sumaVotes(independents));
-var diezPorcent = Math.round(selectData().length * 0.10);
 var dataSortAttendance = selectData().sort(function (a, b) {
   if (a.missed_votes_pct > b.missed_votes_pct) {
     return 1;
@@ -30,11 +29,11 @@ var dataSortLoyalty = selectData().sort(function (a, b) {
   // a must be equal to b
   return 0;
 });
+var diezPorcent = Math.round(selectData().length * 0.10);
 var menoresMisses = menores10(dataSortAttendance);
 var mayoresMisses = mayores10(dataSortAttendance);
 var mostLoyalty = topMostLoyalty(dataSortLoyalty);
 var menosLoyalty = topMenosLoyalty(dataSortLoyalty);
-
 // DATA JSON..... ----------------------
 
 var stadistic = {
@@ -66,13 +65,6 @@ function llenarStadistic() {
   stadistic.least_loyal = topMenosLoyalty(dataSortLoyalty);
   stadistic.most_loyal = topMostLoyalty(dataSortLoyalty);
 }
-
-
-/* 
-°°°°°°°°°°°°°°°°°°°°°°°°°°°
-°  FUNCIONES °
-°°°°°°°°°°°°°°°°°°°°°°°°°°°      */
-
 // selecciona la data a usar
 function selectData() {
 
@@ -85,9 +77,11 @@ function selectData() {
 // Miembros por partido
 function members(array, value) {
   array.filter(item => item.party == value).length
+
 }
 
 //   % Voted w/ Party
+
 function sumaVotes(array) {
   let suma = (0);
   for (let i = 0; i < array.length; i++) {
@@ -95,7 +89,6 @@ function sumaVotes(array) {
   }
   return suma / selectData().length;
 };
-
 // Ordenar Sort esta dentro de la variable dataSortAttendance
 
 // top 10 menores
@@ -111,13 +104,13 @@ function menores10(data) {
   }
   return menores;
 };
+
 // top 10 mayores
 function mayores10(data) {
   var mayores = [];
   for (var x = data.length - 1; x >= data.length - diezPorcent; x--) {
     mayores.push(data[x]);
   }
-
   while (mayores[mayores.length - 1].missed_votes_pct === data[x].missed_votes_pct) {
     mayores.push(data[x]);
     x++
@@ -151,85 +144,3 @@ function topMostLoyalty(data) {
   }
   return mayores;
 }
-
-/* 
-°°°°°°°°°°°°°°°°°°°°°°°°°°°
-°       TABLAS            °
-°°°°°°°°°°°°°°°°°°°°°°°°°°°      */
-llenarStadistic();
-// tabla1 datos generales
-var mytable1 = "<thead > <tr><th> Party </th><th> N° of Reps </th> <th> % Voted w/ Party </th> </thead>";
-mytable1 += "<tbody>";
-mytable1 += "<tr> <td> Democrats </td> <td>" + stadistic.numberOfDemocrats + "</td> <td>" + democratsVotes.toFixed(2) + " % </td> </tr>";
-mytable1 += "<tr> <td> Republicans </td> <td>" + republicans.length + "</td> <td>" + republicansVotes.toFixed(2) + " % </td> </tr>";
-if (independents != 0) {
-  mytable1 += "<tr> <td> Independents </td> <td>" + independents.length + "</td> <td>" + independentsVotes.toFixed(2) + " % </td> </tr>"
-};
-// console.log(mytable1);
-mytable1 += "<tr> <td> TOTAL </td> <td>" + parseInt(stadistic.numberOfDemocrats + republicans.length + independents.length) + "</td> <td>" + parseFloat(democratsVotes + republicansVotes + independentsVotes).toFixed(2) + " % </td> </tr></tbody>"
-
-// tables TOPS
-function tableTopsAttendance(array) {
-  var mytable2 = "<thead > <tr><th> Name </th><th> Missed Votes</th> <th> % Missed Votes </th> </thead><tbody>";
-  array.forEach(element => {
-    mytable2 += "<tr>";
-    if (element.middle_name === null) {
-      mytable2 += '<td><a href= "' + element.url + '">' + element.first_name + ' ' + element.last_name + '</a></td>';
-    } else {
-      mytable2 += '<td><a href= "' + element.url + '">' + element.first_name + ' ' + element.middle_name + ' ' + element.last_name + '</a></td>';
-    }
-    mytable2 += "<td>" + element.missed_votes + "</td>";
-
-    mytable2 += "<td>" + element.missed_votes_pct + "% </td> </tr>";
-
-
-  });
-  mytable2 += "</tbody>";
-  return mytable2;
-}
-
-function tableTopsLoyalty(array) {
-  var mytable3 = "<thead > <tr><th> Name </th><th> Number Party Votes</th> <th> % Party Votes </th> </thead><tbody>";
-  array.forEach(element => {
-    mytable3 += "<tr>";
-    if (element.middle_name === null) {
-      mytable3 += '<td><a href= "' + element.url + '">' + element.first_name + ' ' + element.last_name + '</a></td>';
-    } else {
-      mytable3 += '<td><a href= "' + element.url + '">' + element.first_name + ' ' + element.middle_name + ' ' + element.last_name + '</a></td>';
-    }
-    mytable3 += "<td>" + parseInt((element.votes_with_party_pct * element.total_votes) / 100) + "</td>";
-
-    mytable3 += "<td>" + element.votes_with_party_pct + "% </td> </tr>";
-
-
-  });
-  mytable3 += "</tbody>";
-  return mytable3;
-}
-
-// IMPRIMIR TABLAS
-
-// tabla1 print
-document.getElementById('table1').innerHTML = mytable1;
-
-
-verifyPage();
-
-function verifyPage() {
-  if (document.getElementById("attendance")) {
-    // ATTENDANCE table2 LEAST comprometidos print
-    document.getElementById('table2').innerHTML = tableTopsAttendance(stadistic.leastAttendance);
-    // ATTENDANCE table3 MOST comprometidos print
-    document.getElementById('table3').innerHTML = tableTopsAttendance(stadistic.mostAttendance);
-  } else {
-    // LOYALTY table4 LEAST Lealtad print
-    document.getElementById('table4').innerHTML = tableTopsLoyalty(stadistic.least_loyal);
-
-    // LOYALTY table5 MOST lealtad print
-    document.getElementById('table5').innerHTML = tableTopsLoyalty(stadistic.most_loyal);
-  }
-}
-/* ME QUEDA PENDIENTE:
-2- darle formato a la pag, que quede linda! 
-
-NOTA: testear los datos que arroja*/
