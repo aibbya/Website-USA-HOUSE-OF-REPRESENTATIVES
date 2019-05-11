@@ -10,30 +10,36 @@ var democratsVotes = parseFloat(sumaVotes(selectData().filter(item => item.party
 var republicansVotes = parseFloat(sumaVotes(republicans));
 var independentsVotes = parseFloat(sumaVotes(independents));
 var diezPorcent = Math.round(selectData().length * 0.10);
-var dataSortAttendance = selectData().sort(function (a, b) {
-  if (a.missed_votes_pct > b.missed_votes_pct) {
-    return 1;
-  }
-  if (a.missed_votes_pct < b.missed_votes_pct) {
-    return -1;
-  }
-  // a must be equal to b
-  return 0;
-});
-var dataSortLoyalty = selectData().sort(function (a, b) {
-  if (a.votes_with_party_pct > b.votes_with_party_pct) {
-    return 1;
-  }
-  if (a.votes_with_party_pct < b.votes_with_party_pct) {
-    return -1;
-  }
-  // a must be equal to b
-  return 0;
-});
-var menoresMisses = menores10(dataSortAttendance);
-var mayoresMisses = mayores10(dataSortAttendance);
-var mostLoyalty = topMostLoyalty(dataSortLoyalty);
-var menosLoyalty = topMenosLoyalty(dataSortLoyalty);
+function ordenarA(array) {
+  var dataSortAttendance = selectData().sort(function (a, b) {
+    if (a.missed_votes_pct > b.missed_votes_pct) {
+      return 1;
+    }
+    if (a.missed_votes_pct < b.missed_votes_pct) {
+      return -1;
+    }
+    // a must be equal to b
+    return 0;
+  });
+  return dataSortAttendance;  
+}
+function ordenarL(array) {
+  var dataSortLoyalty = selectData().sort(function (a, b) {
+    if (a.votes_with_party_pct > b.votes_with_party_pct) {
+      return 1;
+    }
+    if (a.votes_with_party_pct < b.votes_with_party_pct) {
+      return -1;
+    }
+    // a must be equal to b
+    return 0;
+  });
+return dataSortLoyalty;    
+}
+var menoresMisses = menores10(ordenarA(selectData()));
+var mayoresMisses = mayores10(ordenarA(selectData()));
+var mostLoyalty = topMostLoyalty(ordenarL(selectData()));
+var menosLoyalty = topMenosLoyalty(ordenarL(selectData()));
 
 // DATA JSON..... ----------------------
 
@@ -61,10 +67,10 @@ function llenarStadistic() {
   stadistic.republicansVotes = parseFloat(sumaVotes(republicans));
   stadistic.independentsVotes = parseFloat(sumaVotes(independents));
   stadistic.total_average = parseFloat(democratsVotes + republicansVotes + independentsVotes).toFixed(2);
-  stadistic.mostAttendance = menores10(dataSortAttendance);
-  stadistic.leastAttendance = mayores10(dataSortAttendance);
-  stadistic.least_loyal = topMenosLoyalty(dataSortLoyalty);
-  stadistic.most_loyal = topMostLoyalty(dataSortLoyalty);
+  stadistic.mostAttendance = menores10(ordenarA(selectData()));
+  stadistic.leastAttendance = mayores10(ordenarA(selectData()));
+  stadistic.least_loyal = topMenosLoyalty(ordenarL(selectData()));
+  stadistic.most_loyal = topMostLoyalty(ordenarL(selectData()));
 }
 
 
