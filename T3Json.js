@@ -10,32 +10,7 @@ var democratsVotes = parseFloat(sumaVotes(selectData().filter(item => item.party
 var republicansVotes = parseFloat(sumaVotes(republicans));
 var independentsVotes = parseFloat(sumaVotes(independents));
 var diezPorcent = Math.round(selectData().length * 0.10);
-function ordenarA(array) {
-  var dataSortAttendance = selectData().sort(function (a, b) {
-    if (a.missed_votes_pct > b.missed_votes_pct) {
-      return 1;
-    }
-    if (a.missed_votes_pct < b.missed_votes_pct) {
-      return -1;
-    }
-    // a must be equal to b
-    return 0;
-  });
-  return dataSortAttendance;  
-}
-function ordenarL(array) {
-  var dataSortLoyalty = selectData().sort(function (a, b) {
-    if (a.votes_with_party_pct > b.votes_with_party_pct) {
-      return 1;
-    }
-    if (a.votes_with_party_pct < b.votes_with_party_pct) {
-      return -1;
-    }
-    // a must be equal to b
-    return 0;
-  });
-return dataSortLoyalty;    
-}
+
 var menoresMisses = menores10(ordenarA(selectData()));
 var mayoresMisses = mayores10(ordenarA(selectData()));
 var mostLoyalty = topMostLoyalty(ordenarL(selectData()));
@@ -102,7 +77,35 @@ function sumaVotes(array) {
   return suma / selectData().length;
 };
 
-// Ordenar Sort esta dentro de la variable dataSortAttendance
+// Ordenar 
+
+function ordenarA(array) {
+  var dataSortAttendance = selectData().sort(function (a, b) {
+    if (a.missed_votes_pct > b.missed_votes_pct) {
+      return 1;
+    }
+    if (a.missed_votes_pct < b.missed_votes_pct) {
+      return -1;
+    }
+    // a must be equal to b
+    return 0;
+  });
+  return dataSortAttendance;
+}
+
+function ordenarL(array) {
+  var dataSortLoyalty = selectData().sort(function (a, b) {
+    if (a.votes_with_party_pct > b.votes_with_party_pct) {
+      return 1;
+    }
+    if (a.votes_with_party_pct < b.votes_with_party_pct) {
+      return -1;
+    }
+    // a must be equal to b
+    return 0;
+  });
+  return dataSortLoyalty;
+}
 
 // top 10 menores
 
@@ -166,13 +169,15 @@ llenarStadistic();
 // tabla1 datos generales
 var mytable1 = "<thead > <tr><th> Party </th><th> N° of Reps </th> <th> % Voted w/ Party </th> </thead>";
 mytable1 += "<tbody>";
-mytable1 += "<tr> <td> Democrats </td> <td>" + stadistic.numberOfDemocrats + "</td> <td>" + democratsVotes.toFixed(2) + " % </td> </tr>";
-mytable1 += "<tr> <td> Republicans </td> <td>" + republicans.length + "</td> <td>" + republicansVotes.toFixed(2) + " % </td> </tr>";
+mytable1 += "<tr> <td> Democrats </td> <td class='text-center'>" + stadistic.numberOfDemocrats + "</td> <td class='text-center'>" + democratsVotes.toFixed(2) + " % </td> </tr>";
+mytable1 += "<tr> <td> Republicans </td> <td class='text-center'>" + republicans.length + "</td> <td class='text-center'>" + republicansVotes.toFixed(2) + " % </td> </tr>";
 if (independents != 0) {
-  mytable1 += "<tr> <td> Independents </td> <td>" + independents.length + "</td> <td>" + independentsVotes.toFixed(2) + " % </td> </tr>"
+  mytable1 += "<tr> <td> Independents </td> <td class='text-center'>" + independents.length + "</td> <td class='text-center'>" + independentsVotes.toFixed(2) + " % </td> </tr>"
+} else {
+  mytable1 += "<tr> <td> Independents </td> <td class='text-center'>" + " |  | </td> <td class='text-center'>" + independentsVotes.toFixed(2) + " % </td> </tr>"
 };
 // console.log(mytable1);
-mytable1 += "<tr> <td> TOTAL </td> <td>" + parseInt(stadistic.numberOfDemocrats + republicans.length + independents.length) + "</td> <td>" + parseFloat(democratsVotes + republicansVotes + independentsVotes).toFixed(2) + " % </td> </tr></tbody>"
+mytable1 += "<tr> <td> TOTAL </td> <td class='text-center'>" + parseInt(stadistic.numberOfDemocrats + republicans.length + independents.length) + "</td> <td class='text-center'>" + parseFloat(democratsVotes + republicansVotes + independentsVotes).toFixed(2) + " % </td> </tr></tbody>"
 
 // tables TOPS
 function tableTopsAttendance(array) {
@@ -184,9 +189,9 @@ function tableTopsAttendance(array) {
     } else {
       mytable2 += '<td><a href= "' + element.url + '">' + element.first_name + ' ' + element.middle_name + ' ' + element.last_name + '</a></td>';
     }
-    mytable2 += "<td>" + element.missed_votes + "</td>";
+    mytable2 += "<td class='text-center'>" + element.missed_votes + "</td>";
 
-    mytable2 += "<td>" + element.missed_votes_pct + "% </td> </tr>";
+    mytable2 += "<td class='text-center'>" + element.missed_votes_pct + "% </td> </tr>";
 
 
   });
@@ -203,10 +208,9 @@ function tableTopsLoyalty(array) {
     } else {
       mytable3 += '<td><a href= "' + element.url + '">' + element.first_name + ' ' + element.middle_name + ' ' + element.last_name + '</a></td>';
     }
-    mytable3 += "<td>" + parseInt((element.votes_with_party_pct * element.total_votes) / 100) + "</td>";
+    mytable3 += "<td class='text-center'>" + parseInt((element.votes_with_party_pct * element.total_votes) / 100) + "</td>";
 
-    mytable3 += "<td>" + element.votes_with_party_pct + "% </td> </tr>";
-
+    mytable3 += "<td class='text-center'>" + element.votes_with_party_pct + "% </td> </tr>";
 
   });
   mytable3 += "</tbody>";
