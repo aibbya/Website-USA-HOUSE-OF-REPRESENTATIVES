@@ -38,10 +38,10 @@ function llenarStadistic() {
   stadistic.numberOfRepublicans = selectData().filter(item => item.party == "R").length;
   stadistic.numberOfIndependents = selectData().filter(item => item.party == "I").length;
   stadistic.total = parseInt(stadistic.numberOfDemocrats + stadistic.numberOfIndependents + stadistic.numberOfRepublicans);
-  stadistic.democratsVotes = parseFloat(sumaVotes(selectData().filter(item => item.party == "D")));
-  stadistic.republicansVotes = parseFloat(sumaVotes(republicans));
-  stadistic.independentsVotes = parseFloat(sumaVotes(independents));
-  stadistic.total_average = parseFloat(sumaVotes(selectData())).toFixed(2);
+  stadistic.democratsVotes = (sumaVotes(selectData().filter(item => item.party == "D")));
+  stadistic.republicansVotes = (sumaVotes(republicans));
+  stadistic.independentsVotes = (sumaVotes(independents));
+  stadistic.total_average = (sumaVotes(selectData())).toFixed(2);
   stadistic.mostAttendance = menores10(ordenarA(selectData()));
   stadistic.leastAttendance = mayores10(ordenarA(selectData()));
   stadistic.least_loyal = topMenosLoyalty(ordenarL(selectData()));
@@ -174,10 +174,10 @@ llenarStadistic();
 // tabla1 datos generales
 var mytable1 = "<thead > <tr><th> Party </th><th> N° of Reps </th> <th> % Voted w/ Party </th> </thead>";
 mytable1 += "<tbody>";
-mytable1 += "<tr> <td> Democrats </td> <td class='text-center'>" + stadistic.numberOfDemocrats + "</td> <td class='text-center'>" + democratsVotes.toFixed(2) + " % </td> </tr>";
-mytable1 += "<tr> <td> Republicans </td> <td class='text-center'>" + republicans.length + "</td> <td class='text-center'>" + republicansVotes.toFixed(2) + " % </td> </tr>";
+mytable1 += "<tr> <td> Democrats </td> <td class='text-center'>" + stadistic.numberOfDemocrats + "</td> <td class='text-center'>" + stadistic.democratsVotes.toFixed(2) + " % </td> </tr>";
+mytable1 += "<tr> <td> Republicans </td> <td class='text-center'>" + stadistic.numberOfRepublicans + "</td> <td class='text-center'>" + stadistic.republicansVotes.toFixed(2) + " % </td> </tr>";
 if (independents != 0) {
-  mytable1 += "<tr> <td> Independents </td> <td class='text-center'>" + independents.length + "</td> <td class='text-center'>" + independentsVotes.toFixed(2) + " % </td> </tr>"
+  mytable1 += "<tr> <td> Independents </td> <td class='text-center'>" + stadistic.numberOfIndependents + "</td> <td class='text-center'>" + stadistic.independentsVotes.toFixed(2) + " % </td> </tr>"
 } else {
   mytable1 += "<tr> <td> Independents </td> <td class='text-center'>" + " 0 </td> <td class='text-center'>" + 0 + " % </td> </tr>"
 };
