@@ -41,7 +41,7 @@ function llenarStadistic() {
   stadistic.democratsVotes = parseFloat(sumaVotes(selectData().filter(item => item.party == "D")));
   stadistic.republicansVotes = parseFloat(sumaVotes(republicans));
   stadistic.independentsVotes = parseFloat(sumaVotes(independents));
-  stadistic.total_average = parseFloat(democratsVotes + republicansVotes + independentsVotes).toFixed(2);
+  stadistic.total_average = parseFloat(sumaVotes(selectData())).toFixed(2);
   stadistic.mostAttendance = menores10(ordenarA(selectData()));
   stadistic.leastAttendance = mayores10(ordenarA(selectData()));
   stadistic.least_loyal = topMenosLoyalty(ordenarL(selectData()));
@@ -74,8 +74,13 @@ function sumaVotes(array) {
   for (let i = 0; i < array.length; i++) {
     suma = suma + array[i].votes_with_party_pct;
   }
-  return suma / selectData().length;
+  if (suma > -1) {
+    console.log(typeof (suma));
+    return suma / array.length;
+  }
 };
+
+// console.log(sumaVotes(independents))
 
 // Ordenar 
 
@@ -174,10 +179,10 @@ mytable1 += "<tr> <td> Republicans </td> <td class='text-center'>" + republicans
 if (independents != 0) {
   mytable1 += "<tr> <td> Independents </td> <td class='text-center'>" + independents.length + "</td> <td class='text-center'>" + independentsVotes.toFixed(2) + " % </td> </tr>"
 } else {
-  mytable1 += "<tr> <td> Independents </td> <td class='text-center'>" + " |  | </td> <td class='text-center'>" + independentsVotes.toFixed(2) + " % </td> </tr>"
+  mytable1 += "<tr> <td> Independents </td> <td class='text-center'>" + " 0 </td> <td class='text-center'>" + 0 + " % </td> </tr>"
 };
 // console.log(mytable1);
-mytable1 += "<tr> <td> TOTAL </td> <td class='text-center'>" + parseInt(stadistic.numberOfDemocrats + republicans.length + independents.length) + "</td> <td class='text-center'>" + parseFloat(democratsVotes + republicansVotes + independentsVotes).toFixed(2) + " % </td> </tr></tbody>"
+mytable1 += "<tr> <td> TOTAL </td> <td class='text-center'>" + selectData().length + "</td> <td class='text-center'>" + stadistic.total_average + " % </td> </tr></tbody>"
 
 // tables TOPS
 function tableTopsAttendance(array) {
