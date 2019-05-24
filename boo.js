@@ -20,7 +20,7 @@ var app = new Vue({
     least_loyal: [],
     most_loyal: [],
 
-  },
+  },aibya
   methods: {
     traeData: (function () {
       fetch(pagUrl, {
