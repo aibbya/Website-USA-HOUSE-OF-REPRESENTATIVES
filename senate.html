@@ -12,21 +12,19 @@
 
 <body class="container">
   <script>
-    (function () {
-      fetch('https://api.propublica.org/congress/v1/113/senate/members.json', {
-        headers: {
-          'X-API-Key': 'D2sQEk1LttT9w8Vydx7vfZZtD3Cag10zupr6TxbL'
-        }
-      }).then(function (respuesta) {
-        return respuesta.json()
-      }).then(function (datos) {
-        console.table(datos.results[0].members)
-      })
-    })();
+    // (function () {
+    //   fetch('https://api.propublica.org/congress/v1/113/senate/members.json', {
+    //     headers: {
+    //       'X-API-Key': 'D2sQEk1LttT9w8Vydx7vfZZtD3Cag10zupr6TxbL'
+    //     }
+    //   }).then(function (respuesta) {
+    //     return respuesta.json()
+    //   }).then(function (datos) {
+    //     console.table(datos.results[0].members)
+    //   })
+    // })();
   </script>
-  <div id="app">
-
-    <header>
+     <header>
       <div class="row">
         <div class="col-10">
           <img src="img/build.jpg" style="height: 60px" alt=logo>
@@ -142,10 +140,22 @@
       </div>
     </form>
     <!--Table container-->
-    <table id="senate_data" class="table"></table>
+    <table id="senate_data" class="table">
+      <div id="app">
+        <tbody>
+          <tr v-for="(value, key) in senators">
+            <td>{{value.first_name}} {{value.middle_name}} {{value.last_name}}</td> 
+            <td>{{...}}</td>
+            <td>{{...}}</td>
+            <td>{{...}}</td>
+            <td>{{...}}</td>
+          </tr>
+        </tbody> 
+      </div>
+    </table>
     <footer class="card-header text-center bg-dark text-light "> &copy; 2016 TGIF | All Rights Reserved
     </footer>
-  </div>
+ 
   <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
   <script src="boo.js"></script>
   <!-- <script src="dataHouse.js"> </script> -->
