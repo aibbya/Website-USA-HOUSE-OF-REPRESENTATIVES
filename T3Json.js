@@ -245,6 +245,6 @@ function verifyPage() {
   }
 }
 /* ME QUEDA PENDIENTE:
-2- darle formato a la pag, que quede linda! 
+2- mejorar diseño 
 
-NOTA: testear los datos que arroja*/
+NOTA: */
