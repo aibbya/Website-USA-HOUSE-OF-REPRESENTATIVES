@@ -77,8 +77,4 @@ var datos = new Vue({
 });
 datos.traeData();
 /* PENDIENTES: 
-    1- la funcion sumaVotes tiene error, debo reviar que pasa.
-    2- cuando llamo en html los algun dato en una etiqueta tr o td no me muestra< los datos, los datos si estan porque si lo llamo en <p> si los muestra.
-    3- el html tiene varias etiquetas de pruebas, PENDIENTE.
-    4- verificar exactamente  que pide la task y en que pag. se debe trabajar.
-    */
+    1- agregar funciones que calcule las otras funciones.
