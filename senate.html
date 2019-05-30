@@ -71,10 +71,11 @@
       secretaries, federal judges, other federal executive officials, military officers, regulatory officials,
       ambassadors, and other federal uniformed officers, as well as trial of federal officials impeached by the
       House.</p>
-  </div>
-  <!--filtro-->
+    </div>
+    <!--filtro-->
+<div id="app">
   <form id="filterParty" class="row card-header ">
-    <div class="col form-check-inline">
+    <div class="col form-check-inline" onchange = 'datos.filtrar'>
       <label class="font-weight-bold font-italic">Party Affiliation: </label>
       <input class="col-1 form-check-input" type="checkbox" name="party" id="democrat" value="D" checked>Democrat
       <input class="col-1 form-check-input" type="checkbox" id="republican" name="party" value="R" checked>Republican
@@ -140,12 +141,7 @@
   </form>
   <!--Table container-->
 
-  <div id="app">
     <table id="senate_data" class="table">
-      <p>{{total}}</p>
-      <p>{{numberOfDemocrats}}</p>
-      <!-- <li v-for="name of democrats">{{democrats.party}}</li> -->
-      <!-- <p v-for="name of members">{{name.party}}</p> -->
       <thead>
         <tr>
           <th> Name </th>

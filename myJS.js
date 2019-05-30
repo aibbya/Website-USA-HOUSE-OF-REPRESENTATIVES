@@ -36,7 +36,6 @@ function addTableToHTML(array) {
     paraHTML += "<td class= 'party'>" + members.party + "</td>";
 
     paraHTML += "<td class= 'state'>" + members.state + "</td>";
-
     // addToDropDown(members.state);
     paraHTML += "<td class= 'seniority'>" + members.seniority + "</td>";
     paraHTML += "<td class= 'party'>" + members.votes_with_party_pct + " % </td>";
