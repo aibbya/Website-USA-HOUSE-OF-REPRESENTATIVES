@@ -10,8 +10,8 @@
 
 </head>
 
-<body class="container">
-  <header id="attendance">
+<body class="container" id="app">
+  <header id="senate_data">
     <div class="row">
       <div class="col-10">
         <img src="img/build.jpg" style="height: 60px" alt=logo>
@@ -69,13 +69,53 @@
       <!--Table container-->
       <div class="col-5">
         <h2 class="card-header">Senate at a glance</h2>
-        <table id="table1" class="table"></table>
+        <table id="table1" class="table">
+          <thead>
+            <tr>
+              <th>Party</th>
+              <th>N° of Reps</th>
+              <th>% Voted w/ Party</th>
+          <tbody>
+            <tr>
+              <td>Democrats</td>
+              <td>{{numberOfDemocrats}}</td>
+              <td>{{democratsVotes}}</td>
+            </tr>
+            <tr>
+              <td>Republicans</td>
+              <td>{{numberOfRepublicans}}</td>
+              <td>{{republicansVotes}}</td>
+            </tr>
+            <tr>
+              <td>Independents</td>
+              <td>{{numberOfIndependents}}</td>
+              <td>{{independentsVotes}}</td>
+            </tr>
+          </tbody>
+          </tr>
+          </thead>
+        </table>
       </div>
     </div>
     <div class="row">
       <div class="col-6">
         <h2 class="card-header">Least Engaged (Bottom 10% Attendance)</h2>
-        <table id="table2" class="table"></table>
+        <table id="table2" class="table">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Missed Votes</th>
+              <th>% Missed Votes</th>
+          <tbody>
+            <tr v-for="member of leastAttendance">
+              <td>{{member.last_name}} {{member.first_name }} {{member.middle_name}}</td>
+              <td>{{member.missed_votes}}</td>
+              <td>{{member.missed_votes_pct}}</td>
+            </tr>
+          </tbody>
+          </tr>
+          </thead>
+        </table>
       </div>
       <div class="col-6">
         <h2 class="card-header">Most Engaged (Top 10% Attendance)</h2>

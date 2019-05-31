@@ -5,17 +5,18 @@ if (document.getElementById("senate_data")) {
   var pagUrl = 'https://api.propublica.org/congress/v1/113/house/members.json'
 };
 
+
 var miembros = [];
 var datos = new Vue({
   el: '#app',
   data: {
     pagUrl: pagUrl,
     members: [],
-    membersAux : [],
+    membersAux: [],
     democrats: [],
     republicans: [],
-    independents:[],
-    numberOfDemocrats: 57,
+    independents: [],
+    numberOfDemocrats: 0,
     numberOfIndependents: 0,
     numberOfRepublicans: 0,
     total: 0,
@@ -23,11 +24,11 @@ var datos = new Vue({
     republicansVotes: 0,
     independentsVotes: 0,
     total_average: 0,
+    diezPorcent: 0,
     leastAttendance: [],
     mostAttendance: [],
     least_loyal: [],
     most_loyal: [],
-
   },
   methods: {
     // FUNCION PARA TRAER LA DATA Y LLENAR MIS DATOS GENERALES
@@ -41,6 +42,7 @@ var datos = new Vue({
       }).then(function (dataGral) {
         datos.members = dataGral.results[0].members;
         miembros = dataGral.results[0].members;
+        datos.membersAux = dataGral.results[0].members;
         datos.democrats = miembros.filter(item => item.party == "D");
         datos.republicans = miembros.filter(item => item.party == "R");
         datos.independents = miembros.filter(item => item.party == "I")
@@ -53,6 +55,7 @@ var datos = new Vue({
         datos.republicansVotes = datos.sumaVotes(datos.republicans);
         datos.independentsVotes = datos.sumaVotes(datos.independents);
         datos.total_average = datos.sumaVotes(miembros).toFixed(2);
+        datos.diezPorcent = Math.round(miembros.length * 0.10);
         // datos.mostAttendance = datos.menores10(ordenarA(datos.members));
         // datos.leastAttendance = datos.mayores10(ordenarA(datos.members));
         // datos.least_loyal = datos.topMenosLoyalty(ordenarL(datos.members));
@@ -60,30 +63,32 @@ var datos = new Vue({
       }).catch((error) => console.error("Error de Fetch"))
     },
     // FUNCION PARA FILTRAR DATA
-    filtrar : function (array) {
+    filtrar: function () {
+      //   alert("si entra")
+      // },
       // variables a crear
       let items = [];
       let aux = [];
       let stateSelect = document.getElementById("select-states").value;
       let final = [];
-    
+
       // traer checkboxes checked
       let checkeds = Array.from(document.querySelectorAll('input[type=checkbox]:checked')).map(element => element.value);
-    
+
       // Filtro de Party 
       checkeds.forEach(element => {
-        aux = [];
-        aux = array.filter(item => item.party === element);
+        aux = datos.membersAux;
+        aux = datos.membersAux.filter(item => item.party === element);
         items.push.apply(items, aux);
       })
-    
+
       // Seleccion de State
       for (var i = 0; i < items.length; i++) {
         if (items[i].state == stateSelect || stateSelect == "ALL") {
           final.push(items[i])
         };
-    }
-      datos.membersAux = final;
+      }
+      datos.members = final;
     },
     // FUNCION PARA OBTERNER PORCENTAJE DE VOTOS POR PARTIDO
     sumaVotes: function (array) {
@@ -98,8 +103,63 @@ var datos = new Vue({
       } else {
         return suma
       }
-
     },
+    ordenarA: function () {
+      var dataSortAttendance = miembros.sort(function (a, b) {
+        if (a.missed_votes_pct > b.missed_votes_pct) {
+          return 1;
+        }
+        if (a.missed_votes_pct < b.missed_votes_pct) {
+          return -1;
+        }
+        // a must be equal to b
+        return 0;
+      });
+      return dataSortAttendance;
+    },
+
+    ordenarL: function () {
+      var dataSortLoyalty = miembros.sort(function (a, b) {
+        if (a.votes_with_party_pct > b.votes_with_party_pct) {
+          return 1;
+        }
+        if (a.votes_with_party_pct < b.votes_with_party_pct) {
+          return -1;
+        }
+        // a must be equal to b
+        return 0;
+      });
+      return dataSortLoyalty;
+    },
+
+    // top 10 menores
+
+    menores10: function (data) {
+      var menores = [];
+      for (var x = 0; x < diezPorcent; x++)
+        menores.push(data[x]);
+
+      while (menores[menores.length - 1].missed_votes_pct === data[x].missed_votes_pct) {
+        menores.push(data[x]);
+        x++
+      }
+      return menores;
+    },
+    // top 10 mayores
+    mayores10: function (data) {
+      var mayores = [];
+      for (var x = data.length - 1; x >= data.length - diezPorcent; x--) {
+        mayores.push(data[x]);
+      }
+
+      while (mayores[mayores.length - 1].missed_votes_pct === data[x].missed_votes_pct) {
+        mayores.push(data[x]);
+        x++
+        // console.log(data[x]);
+      }
+      return mayores;
+    },
+
   } // aca termina methods
 });
 datos.traeData();
