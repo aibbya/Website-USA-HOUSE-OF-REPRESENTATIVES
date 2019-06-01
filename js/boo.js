@@ -5,8 +5,8 @@ if (document.getElementById("senate_data")) {
   var pagUrl = 'https://api.propublica.org/congress/v1/113/house/members.json'
 };
 
-
 var miembros = [];
+
 var datos = new Vue({
   el: '#app',
   data: {
@@ -25,6 +25,7 @@ var datos = new Vue({
     independentsVotes: 0,
     total_average: 0,
     diezPorcent: 0,
+    ordenadosA: [],
     leastAttendance: [],
     mostAttendance: [],
     least_loyal: [],
@@ -50,22 +51,19 @@ var datos = new Vue({
         datos.numberOfRepublicans = miembros.filter(item => item.party == "R").length;
         datos.numberOfIndependents = miembros.filter(item => item.party == "I").length;
         datos.total = parseInt(datos.numberOfDemocrats + datos.numberOfIndependents + datos.numberOfRepublicans);
-        datos.democratsVotes = datos.sumaVotes(datos.democrats);
-        // A PARTIR DE ACA ESTA COMENTADO PORQUE LA FUNCION ANTERIOR ESTA DANDO ERROR Y EL RESTO HAY QUE CHEQUERARLO
-        datos.republicansVotes = datos.sumaVotes(datos.republicans);
-        datos.independentsVotes = datos.sumaVotes(datos.independents);
+        datos.democratsVotes = datos.sumaVotes(datos.democrats).toFixed(2);
+        datos.republicansVotes = datos.sumaVotes(datos.republicans).toFixed(2);
+        datos.independentsVotes = datos.sumaVotes(datos.independents).toFixed(2);
         datos.total_average = datos.sumaVotes(miembros).toFixed(2);
         datos.diezPorcent = Math.round(miembros.length * 0.10);
-        // datos.mostAttendance = datos.menores10(ordenarA(datos.members));
-        // datos.leastAttendance = datos.mayores10(ordenarA(datos.members));
-        // datos.least_loyal = datos.topMenosLoyalty(ordenarL(datos.members));
-        // datos.most_loyal = datos.topMostLoyalty(ordenarL(datos.members));
+        datos.mostAttendance = datos.menores10(datos.ordenarA());
+        datos.leastAttendance = datos.mayores10(datos.ordenarA());
+        datos.least_loyal = datos.topMenosLoyalty(datos.ordenarL());
+        datos.most_loyal = datos.topMostLoyalty(datos.ordenarL());
       }).catch((error) => console.error("Error de Fetch"))
     },
     // FUNCION PARA FILTRAR DATA
     filtrar: function () {
-      //   alert("si entra")
-      // },
       // variables a crear
       let items = [];
       let aux = [];
@@ -81,7 +79,6 @@ var datos = new Vue({
         aux = datos.membersAux.filter(item => item.party === element);
         items.push.apply(items, aux);
       })
-
       // Seleccion de State
       for (var i = 0; i < items.length; i++) {
         if (items[i].state == stateSelect || stateSelect == "ALL") {
@@ -104,20 +101,23 @@ var datos = new Vue({
         return suma
       }
     },
-    ordenarA: function () {
+    // funciones para Ordenar la data
+    ordenarA: function () {  /*console.log("entra a ordenarA")*/
       var dataSortAttendance = miembros.sort(function (a, b) {
         if (a.missed_votes_pct > b.missed_votes_pct) {
+          
           return 1;
         }
         if (a.missed_votes_pct < b.missed_votes_pct) {
+          
           return -1;
         }
         // a must be equal to b
+        
         return 0;
       });
       return dataSortAttendance;
     },
-
     ordenarL: function () {
       var dataSortLoyalty = miembros.sort(function (a, b) {
         if (a.votes_with_party_pct > b.votes_with_party_pct) {
@@ -131,12 +131,11 @@ var datos = new Vue({
       });
       return dataSortLoyalty;
     },
-
-    // top 10 menores
-
-    menores10: function (data) {
+    // FUNCIONES PARA TOMAR EL ARRAY DEL 10%
+    // top 10 menores ATTENDANCE
+    menores10: function (data) { 
       var menores = [];
-      for (var x = 0; x < diezPorcent; x++)
+      for (var x = 0; x < datos.diezPorcent; x++)
         menores.push(data[x]);
 
       while (menores[menores.length - 1].missed_votes_pct === data[x].missed_votes_pct) {
@@ -145,13 +144,12 @@ var datos = new Vue({
       }
       return menores;
     },
-    // top 10 mayores
+    // top 10 mayores ATTENDANCE
     mayores10: function (data) {
       var mayores = [];
-      for (var x = data.length - 1; x >= data.length - diezPorcent; x--) {
+      for (var x = data.length - 1; x >= data.length - datos.diezPorcent; x--) {
         mayores.push(data[x]);
       }
-
       while (mayores[mayores.length - 1].missed_votes_pct === data[x].missed_votes_pct) {
         mayores.push(data[x]);
         x++
@@ -159,9 +157,32 @@ var datos = new Vue({
       }
       return mayores;
     },
+    //  loyalty
+    topMenosLoyalty: function (data) {
+  var menores = [];
+  for (var x = 0; x < datos.diezPorcent; x++)
+    menores.push(data[x]);
 
-  } // aca termina methods
+  while (menores[menores.length - 1].votes_with_party_pct === data[x].votes_with_party_pct) {
+    menores.push(data[x]);
+    x++
+  }
+  return menores;
+},
+    topMostLoyalty: function (data) {
+    var mayores = [];
+  for (var x = data.length - 1; x >= data.length - datos.diezPorcent; x--) {
+    mayores.push(data[x]);
+  }
+  while (mayores[mayores.length - 1].votes_with_party_pct === data[x].votes_with_party_pct) {
+    mayores.push(data[x]);
+    x++
+    // console.log(data[x]);  
+  }
+  return mayores;
+}
+} // aca termina methods
 });
 datos.traeData();
 /* PENDIENTES: 
-    1- agregar funciones que calcule las otras funciones.*/
+    1- solo quitar el NaN cuando es 0 los insdependientes.*/
