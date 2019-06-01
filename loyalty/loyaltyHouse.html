@@ -13,12 +13,12 @@
 <body class="container font-italic">
   <header>
     <div class="row">
-        <div class="col-10">
-          <img src="../img/ww.jpg" style="height: 60px" alt=logo>
-        </div>
-        <div class="col-2 d-flex align-content-center flex-wrap">
-          <img src="../img/letter.png" alt=letter> <a href="mailto:info@tgif.net"> info@tgif.net </a>
-        </div>
+      <div class="col-10">
+        <img src="../img/ww.jpg" style="height: 60px" alt=logo>
+      </div>
+      <div class="col-2 d-flex align-content-center flex-wrap">
+        <img src="../img/letter.png" alt=letter> <a href="mailto:info@tgif.net"> info@tgif.net </a>
+      </div>
 
     </div>
     <nav class="navbar navbar-expand-sm bg-dark ">
@@ -85,7 +85,8 @@
           <tr>
             <td>Independents</td>
             <td class="text-center">{{numberOfIndependents}}</td>
-            <td class="text-center">{{independentsVotes}} %</td>
+            <td class="text-center" v-show="numberOfIndependents == 0"> 0 %</td>
+            <td class="text-center" v-show="numberOfIndependents !== 0"> {{independentsVotes}} %</td>
           </tr>
           <tr class="border bg-light">
             <td>TOTAL</td>

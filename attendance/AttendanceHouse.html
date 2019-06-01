@@ -7,7 +7,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
     integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-
 </head>
 
 <body class="container font-italic">
@@ -19,7 +18,6 @@
       <div class="col-2 d-flex align-content-center flex-wrap">
         <img src="../img/letter.png" alt=letter> <a href="mailto:info@tgif.net"> info@tgif.net </a>
       </div>
-
     </div>
     <nav class="navbar navbar-expand-sm bg-dark ">
       <ul class="navbar-nav ">
@@ -92,7 +90,8 @@
             <tr>
               <td>Independents</td>
               <td class="text-center">{{numberOfIndependents}}</td>
-              <td class="text-center">{{independentsVotes}} %</td>
+              <td class="text-center" v-show="numberOfIndependents == 0"> 0 %</td>
+              <td class="text-center" v-show="numberOfIndependents !== 0"> {{independentsVotes}} %</td>
             </tr>
             <tr class="border bg-light">
               <td>TOTAL</td>
