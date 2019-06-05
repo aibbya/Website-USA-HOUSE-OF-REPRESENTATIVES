@@ -60,6 +60,8 @@ var datos = new Vue({
         datos.leastAttendance = datos.mayores10(datos.ordenarA());
         datos.least_loyal = datos.topMenosLoyalty(datos.ordenarL());
         datos.most_loyal = datos.topMostLoyalty(datos.ordenarL());
+        console.log(pagUrl);
+
       }).catch((error) => console.error("Error de Fetch"))
     },
     // FUNCION PARA FILTRAR DATA
@@ -102,18 +104,19 @@ var datos = new Vue({
       }
     },
     // funciones para Ordenar la data
-    ordenarA: function () {  /*console.log("entra a ordenarA")*/
+    ordenarA: function () {
+      /*console.log("entra a ordenarA")*/
       var dataSortAttendance = miembros.sort(function (a, b) {
         if (a.missed_votes_pct > b.missed_votes_pct) {
-          
+
           return 1;
         }
         if (a.missed_votes_pct < b.missed_votes_pct) {
-          
+
           return -1;
         }
         // a must be equal to b
-        
+
         return 0;
       });
       return dataSortAttendance;
@@ -133,7 +136,7 @@ var datos = new Vue({
     },
     // FUNCIONES PARA TOMAR EL ARRAY DEL 10%
     // top 10 menores ATTENDANCE
-    menores10: function (data) { 
+    menores10: function (data) {
       var menores = [];
       for (var x = 0; x < datos.diezPorcent; x++)
         menores.push(data[x]);
@@ -159,29 +162,29 @@ var datos = new Vue({
     },
     //  loyalty
     topMenosLoyalty: function (data) {
-  var menores = [];
-  for (var x = 0; x < datos.diezPorcent; x++)
-    menores.push(data[x]);
+      var menores = [];
+      for (var x = 0; x < datos.diezPorcent; x++)
+        menores.push(data[x]);
 
-  while (menores[menores.length - 1].votes_with_party_pct === data[x].votes_with_party_pct) {
-    menores.push(data[x]);
-    x++
-  }
-  return menores;
-},
+      while (menores[menores.length - 1].votes_with_party_pct === data[x].votes_with_party_pct) {
+        menores.push(data[x]);
+        x++
+      }
+      return menores;
+    },
     topMostLoyalty: function (data) {
-    var mayores = [];
-  for (var x = data.length - 1; x >= data.length - datos.diezPorcent; x--) {
-    mayores.push(data[x]);
-  }
-  while (mayores[mayores.length - 1].votes_with_party_pct === data[x].votes_with_party_pct) {
-    mayores.push(data[x]);
-    x++
-    // console.log(data[x]);  
-  }
-  return mayores;
-}
-} // aca termina methods
+      var mayores = [];
+      for (var x = data.length - 1; x >= data.length - datos.diezPorcent; x--) {
+        mayores.push(data[x]);
+      }
+      while (mayores[mayores.length - 1].votes_with_party_pct === data[x].votes_with_party_pct) {
+        mayores.push(data[x]);
+        x++
+        // console.log(data[x]);  
+      }
+      return mayores;
+    }
+  } // aca termina methods
 });
 datos.traeData();
 /* PENDIENTES: 
